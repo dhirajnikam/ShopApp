@@ -86,15 +86,8 @@ class ShopList extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Align(
-                  alignment: Alignment.topRight,
-                  child: _fav( index)
-                ),
-                Container(
-                  height: 120,
-                  width: 120,
-                  child: _img(index)
-                ),
+                Align(alignment: Alignment.topRight, child: _fav(index)),
+                Container(height: 120, width: 120, child: _img(index)),
                 SizedBox(
                   height: 50,
                 ),
@@ -106,23 +99,25 @@ class ShopList extends StatelessWidget {
       ),
     );
   }
-  _fav(int index){
+
+  _fav(int index) {
     return Container(
-                    height: 40,
-                    width: 40,
-                    decoration: BoxDecoration(
-                        color: product.ductList[index].color,
-                        border: Border.all(width: 5, color: Colors.white),
-                        borderRadius: BorderRadius.circular(30)),
-                    child: Icon(Icons.favorite),
-                  );
+      height: 40,
+      width: 40,
+      decoration: BoxDecoration(
+          color: product.ductList[index].color,
+          border: Border.all(width: 5, color: Colors.white),
+          borderRadius: BorderRadius.circular(30)),
+      child: Icon(Icons.favorite),
+    );
   }
-_img(int index){
-  return Hero(
-                      tag: "DemoTag${index}",
-                      child: Image(
-                          image: AssetImage(product.ductList[index].img)));
-}
+
+  _img(int index) {
+    return Hero(
+        tag: "DemoTag${index}",
+        child: Image(image: AssetImage(product.ductList[index].img)));
+  }
+
   _title(int index) {
     return TextTheme1(text: product.ductList[index].title);
   }

@@ -14,9 +14,7 @@ class DetailView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
-        children: [
-          _frontBody(),
-          _backBody()],
+        children: [_frontBody(), _backBody()],
       ),
     );
   }

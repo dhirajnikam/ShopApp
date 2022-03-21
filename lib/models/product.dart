@@ -1,18 +1,26 @@
-import 'package:flutter/material.dart';
 
 class Product {
   String title;
   String img;
-  Color color;
-  double price;
+  String color;
+  String price;
   String desc;
-  bool fav;
+
   Product({
     required this.title,
     required this.img,
     required this.color,
     required this.price,
     required this.desc,
-    required this.fav
   });
+
+  factory Product.fromMap(dynamic map) {
+    return Product(
+      title: map['title'],
+      img: map['img'],
+      color: map['color'],
+      price: map['price'],
+      desc: map['desc'],
+    );
+  }
 }

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hexcolor/hexcolor.dart';
+import 'package:shop1/common/containerThem.dart';
 import 'package:shop1/common/textThem.dart';
 import 'package:shop1/controller/listController/listController.dart';
 import 'package:shop1/view/detailView.dart';
@@ -10,7 +12,15 @@ class ShopList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: _body());
+    return Scaffold(body: Obx(() {
+      if (product.listProduct.isEmpty) {
+        return Center(child: CircularProgressIndicator(),);
+      } else if (product.listProduct.length == 0) {
+        return Text('Empty List');
+      } else {
+        return _body();
+      }
+    }));
   }
 
   _body() {
@@ -41,9 +51,24 @@ class ShopList extends StatelessWidget {
             ),
             delegate: SliverChildBuilderDelegate(
               (BuildContext context, int index) {
-                return _grid(index);
+                return Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: GestureDetector(
+                      onTap: () {
+                        Get.to(DetailView(
+                          Pindex: index,
+                        ));
+                      },
+                      child: ContainerThem1 (
+                        color: HexColor(product.listProduct[index].color),
+                        tag: "DemoTag${index}",
+                        img: product.listProduct[index].img,
+                        
+                        title: product.listProduct[index].title,
+                      )),
+                );
               },
-              childCount: product.count,
+              childCount: product.listProduct.length,
             ),
           ),
         ],
@@ -64,61 +89,5 @@ class ShopList extends StatelessWidget {
       minRadius: 30,
       backgroundImage: AssetImage("assets/pro/pic.webp"),
     );
-  }
-
-  _grid(int index) {
-    return Padding(
-      padding: const EdgeInsets.all(10),
-      child: GestureDetector(
-        onTap: () {
-          Get.to(DetailView(
-            Pindex: index,
-          ));
-        },
-        child: Container(
-          decoration: BoxDecoration(
-              boxShadow: [
-                BoxShadow(color: Colors.grey.shade50, blurRadius: 10),
-              ],
-              color: product.ductList[index].color,
-              borderRadius: BorderRadius.circular(20)),
-          child: Container(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Align(alignment: Alignment.topRight, child: _fav(index)),
-                Container(height: 120, width: 120, child: _img(index)),
-                SizedBox(
-                  height: 50,
-                ),
-                _title(index)
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  _fav(int index) {
-    return Container(
-      height: 40,
-      width: 40,
-      decoration: BoxDecoration(
-          color: product.ductList[index].color,
-          border: Border.all(width: 5, color: Colors.white),
-          borderRadius: BorderRadius.circular(30)),
-      child: Icon(Icons.favorite),
-    );
-  }
-
-  _img(int index) {
-    return Hero(
-        tag: "DemoTag${index}",
-        child: Image(image: AssetImage(product.ductList[index].img)));
-  }
-
-  _title(int index) {
-    return TextTheme1(text: product.ductList[index].title);
   }
 }

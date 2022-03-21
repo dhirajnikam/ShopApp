@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hexcolor/hexcolor.dart';
 import 'package:shop1/common/textThem.dart';
 import 'package:shop1/controller/listController/listController.dart';
 
@@ -21,7 +22,7 @@ class DetailView extends StatelessWidget {
 
   _frontBody() {
     return Container(
-      color: product.ductList[Pindex].color,
+      color: HexColor(product.listProduct[Pindex].color),
       child: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(10.0),
@@ -66,7 +67,7 @@ class DetailView extends StatelessWidget {
       height: 50,
       width: 50,
       decoration: BoxDecoration(
-          color: product.ductList[Pindex].color,
+          color: HexColor(product.listProduct[Pindex].color),
           borderRadius: BorderRadius.circular(30),
           border: Border.all(color: Colors.white, width: 5)),
       child: Center(child: Icon(Icons.share)),
@@ -76,7 +77,7 @@ class DetailView extends StatelessWidget {
   _img() {
     return Hero(
         tag: "DemoTag${Pindex}",
-        child: Image(image: AssetImage(product.ductList[Pindex].img)));
+        child: Image(image: NetworkImage(product.listProduct[Pindex].img)));
   }
 
   _backBody() {
@@ -95,18 +96,13 @@ class DetailView extends StatelessWidget {
             padding: const EdgeInsets.all(10.0),
             child: Column(
               children: [
-                _title(),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Row(
-                      children: [
-                        TextTheme2(
-                          text: "Color ",
-                        ),
-                        _colorT()
-                      ],
-                    )
+                    _title(),
+                    TextTheme2(
+                      text: "Price ₹${product.listProduct[Pindex].price}",
+                    ),
                   ],
                 ),
                 Container(height: Get.height * 0.4, child: _desc()),
@@ -124,17 +120,13 @@ class DetailView extends StatelessWidget {
 
   _title() {
     return TextTheme1(
-      text: product.ductList[Pindex].title,
+      text: product.listProduct[Pindex].title,
     );
-  }
-
-  _colorT() {
-    return CircleAvatar(backgroundColor: product.ductList[Pindex].color);
   }
 
   _desc() {
     return TextTheme2(
-      text: product.ductList[Pindex].desc,
+      text: product.listProduct[Pindex].desc,
     );
   }
 
@@ -144,7 +136,7 @@ class DetailView extends StatelessWidget {
       width: 60,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
-          color: product.ductList[Pindex].color,
+          color: HexColor(product.listProduct[Pindex].color),
           border: Border.all(color: Colors.grey)),
       child: Icon(Icons.favorite),
     );
@@ -155,7 +147,7 @@ class DetailView extends StatelessWidget {
       height: 60,
       width: Get.width * 0.65,
       decoration: BoxDecoration(
-          color: product.ductList[Pindex].color,
+          color: HexColor(product.listProduct[Pindex].color),
           borderRadius: BorderRadius.circular(20)),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,

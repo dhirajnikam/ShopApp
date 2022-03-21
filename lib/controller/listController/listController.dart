@@ -1,29 +1,26 @@
-import 'package:flutter/material.dart';
+import 'dart:math';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 import 'package:shop1/data/list.dart';
 import 'package:shop1/models/product.dart';
+import 'package:shop1/services/database.dart';
 
 class ListController extends GetxController {
-  List<Product> _list = productList;
-  late ScrollController _scrollController;
+  // final List<Product> _list = productList;
+  RxList<Product> listProduct = RxList<Product>([]);
+  //List<Product>? get proList => _list.value;
+  FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
 
- 
-
-   
-
-
-
-//----------
-  bool get _isSliverAppBarExpanded {
-    return _scrollController.hasClients &&
-        _scrollController.offset > (200 - kToolbarHeight);
+  @override
+  void onInit() {
+    // TODO: implement onInit
+    super.onInit();
+    listProduct.bindStream(FireStoreDB().getProduct());
   }
 
-  int get count {
-    return _list.length;
-  }
-
-  List<Product> get ductList {
-    return [..._list];
-  }
+  // Stream<List<Product>> getProduct() =>  firebaseFirestore
+  //     .collection('ListShop')
+  //     .snapshots()
+  //     .map((event) => event.docs.map((e) => Product.fromMap(e)).toList());
 }
